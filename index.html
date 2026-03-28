@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شروط الاستخدام - DietsAI</title>
+    <title>Terms of Use - DietsAI</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -21,108 +21,762 @@
             padding: 40px;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        h1 {
-            color: #4A90FF;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .app-name {
-            color: #4A90FF;
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
+        h1 { color: #4A90FF; font-size: 28px; margin-bottom: 10px; }
+        .app-name { color: #4A90FF; font-size: 16px; margin-bottom: 6px; }
+        .developer-name { color: #aaa; font-size: 14px; margin-bottom: 30px; }
         h2 {
-            color: #4A90FF;
-            font-size: 20px;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            color: #4A90FF; font-size: 20px;
+            margin-top: 30px; margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(74,144,255,0.2);
         }
-        p, li {
-            margin-bottom: 10px;
-            color: #ccc;
-        }
-        ul {
-            padding-right: 25px;
-            margin-bottom: 15px;
-        }
-        .update-date {
-            color: #888;
-            font-size: 14px;
-            margin-top: 30px;
-            text-align: center;
-        }
+        p, li { margin-bottom: 10px; color: #ccc; }
+        ul { padding-inline-start: 25px; margin-bottom: 15px; }
+        .update-date { color: #888; font-size: 14px; margin-top: 30px; text-align: center; }
         a { color: #4A90FF; }
+        .lang-selector {
+            position: fixed; top: 16px; right: 16px;
+            background: rgba(74,144,255,0.15);
+            border: 1px solid rgba(74,144,255,0.4);
+            border-radius: 10px; padding: 6px 12px;
+            color: #4A90FF; font-size: 13px; cursor: pointer;
+            backdrop-filter: blur(10px); z-index: 100;
+        }
+        .lang-selector select {
+            background: transparent; border: none;
+            color: #4A90FF; font-size: 13px; cursor: pointer;
+            outline: none;
+        }
+        .lang-selector select option { background: #0a0e27; color: #e0e0e0; }
+        strong { color: #e0e0e0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>شروط الاستخدام</h1>
-        <p class="app-name">DietsAI - مساعد التغذية الذكي</p>
+<div class="lang-selector">
+    🌐 <select id="langPicker" onchange="switchLang(this.value)"></select>
+</div>
+<div class="container" id="content"></div>
 
-        <h2>القبول بالشروط</h2>
-        <p>باستخدامك لتطبيق DietsAI، فإنك توافق على الالتزام بشروط الاستخدام هذه. إذا كنت لا توافق على هذه الشروط، يرجى عدم استخدام التطبيق.</p>
+<script>
+const T = {
+  ar: {
+    dir:'rtl', lang:'ar', langName:'العربية',
+    title:'شروط الاستخدام - DietsAI',
+    h1:'شروط الاستخدام',
+    subtitle:'DietsAI - مساعد التغذية الذكي',
+    developer:'المطور: عيسى الهلالي',
+    s1:'القبول بالشروط',
+    p1:'باستخدامك لتطبيق DietsAI، فإنك توافق على الالتزام بشروط الاستخدام هذه.',
+    s2:'وصف الخدمة',
+    p2:'DietsAI تطبيق مساعد تغذية يستخدم الذكاء الاصطناعي لتحليل الوجبات الغذائية وتقديم معلومات غذائية. يقدم التطبيق:',
+    l2:['تحليل صور الطعام باستخدام الذكاء الاصطناعي.','تقدير السعرات الحرارية والعناصر الغذائية.','تتبع الوجبات اليومية.','ملخصات غذائية.'],
+    s3:'إخلاء المسؤولية الطبية',
+    p3:'<strong>DietsAI ليس بديلاً عن الاستشارة الطبية.</strong> المعلومات الغذائية المقدمة هي تقديرات تقريبية. استشر طبيبك أو أخصائي التغذية للحصول على نصائح طبية.',
+    s4:'الاشتراكات والمدفوعات',
+    l4:['يقدم التطبيق اشتراكات تتجدد تلقائياً (شهرية وسنوية).','يتم خصم المبلغ عند تأكيد الشراء.','يتجدد الاشتراك تلقائياً ما لم يتم إلغاؤه قبل 24 ساعة من نهاية الفترة.','يمكنك إدارة أو إلغاء اشتراكك من إعدادات حسابك.','لا يمكن استرداد المبلغ عن الفترة الحالية.','يحصل المستخدمون المجانيون على 3 تحليلات يومياً.'],
+    s5:'حقوق الملكية الفكرية',
+    p5:'جميع حقوق الملكية الفكرية مملوكة لـ DietsAI. لا يجوز نسخ أو تعديل أي جزء من التطبيق دون إذن.',
+    s6:'استخدام مقبول',
+    p6:'توافق على:',
+    l6:['استخدام التطبيق للأغراض الشخصية فقط.','عدم محاولة الوصول غير المصرح به إلى أنظمتنا.','عدم استخدام التطبيق بطريقة تنتهك القوانين.','عدم إعادة بيع الخدمة.'],
+    s7:'محتوى المستخدم',
+    p7:'أنت تحتفظ بملكية الصور والبيانات التي ترفعها. بتحميل المحتوى، تمنحنا ترخيصاً محدوداً لاستخدامه لتقديم الخدمة لك.',
+    s8:'تحديد المسؤولية',
+    p8:'يتم تقديم التطبيق "كما هو". لا نتحمل المسؤولية عن:',
+    l8:['أضرار ناتجة عن الاعتماد على المعلومات الغذائية.','انقطاع الخدمة أو فقدان البيانات.','عدم دقة تحليل الذكاء الاصطناعي.'],
+    s9:'إنهاء الخدمة',
+    p9:'يحق لنا تعليق وصولك في حالة انتهاك هذه الشروط. يمكنك إنهاء الاستخدام بحذف حسابك.',
+    s10:'التغييرات على الشروط',
+    p10:'قد نحدّث هذه الشروط وسنخطرك بأي تغييرات جوهرية.',
+    s11:'القانون الحاكم',
+    p11:'تخضع هذه الشروط للقوانين المعمول بها في بلد إقامتك.',
+    s12:'تواصل معنا',
+    p12:'إذا كان لديك أي استفسارات، تواصل معنا:',
+    email:'support@dietsai.com',
+    updated:'آخر تحديث: مارس 2026'
+  },
+  en: {
+    dir:'ltr', lang:'en', langName:'English',
+    title:'Terms of Use - DietsAI',
+    h1:'Terms of Use',
+    subtitle:'DietsAI - AI Nutrition Assistant',
+    developer:'Developer: Issa Alhilali',
+    s1:'Acceptance of Terms',
+    p1:'By using DietsAI, you agree to be bound by these Terms of Use.',
+    s2:'Service Description',
+    p2:'DietsAI is an AI-powered nutrition assistant app. The app provides:',
+    l2:['AI-based food image analysis.','Calorie and nutrient estimation.','Daily meal tracking.','Nutritional summaries.'],
+    s3:'Medical Disclaimer',
+    p3:'<strong>DietsAI is not a substitute for medical advice.</strong> Nutritional information is approximate. Consult your doctor or nutritionist for medical advice.',
+    s4:'Subscriptions and Payments',
+    l4:['The app offers auto-renewing subscriptions (monthly and annual).','Payment is charged upon purchase confirmation.','Subscriptions auto-renew unless cancelled at least 24 hours before the end of the period.','Manage or cancel your subscription from your account settings.','No refunds for the current subscription period.','Free users receive 3 daily analyses.'],
+    s5:'Intellectual Property',
+    p5:'All intellectual property rights are owned by DietsAI. No copying or modification without written permission.',
+    s6:'Acceptable Use',
+    p6:'You agree to:',
+    l6:['Use the app for personal purposes only.','Not attempt unauthorized access to our systems.','Not use the app in violation of applicable laws.','Not resell or redistribute the service.'],
+    s7:'User Content',
+    p7:'You retain ownership of images and data you upload. By uploading content, you grant us a limited license to use it solely to provide the service to you.',
+    s8:'Limitation of Liability',
+    p8:'The app is provided "as is". We are not responsible for:',
+    l8:['Damages resulting from reliance on nutritional information.','Service interruption or data loss.','Inaccuracy of AI analysis.'],
+    s9:'Termination',
+    p9:'We may suspend your access for violation of these terms. You may terminate use by deleting your account.',
+    s10:'Changes to Terms',
+    p10:'We may update these terms and will notify you of any material changes.',
+    s11:'Governing Law',
+    p11:'These terms are governed by the laws applicable in your country of residence.',
+    s12:'Contact Us',
+    p12:'For any questions about these terms:',
+    email:'support@dietsai.com',
+    updated:'Last updated: March 2026'
+  },
+  zh: {
+    dir:'ltr', lang:'zh', langName:'中文',
+    title:'使用条款 - DietsAI',
+    h1:'使用条款',
+    subtitle:'DietsAI - AI营养助手',
+    developer:'开发者：Issa Alhilali',
+    s1:'条款接受',
+    p1:'使用DietsAI即表示您同意遵守这些使用条款。',
+    s2:'服务描述',
+    p2:'DietsAI是一款AI驱动的营养助手应用。本应用提供：',
+    l2:['基于AI的食物图像分析。','卡路里和营养素估算。','每日膳食追踪。','营养摘要。'],
+    s3:'医疗免责声明',
+    p3:'<strong>DietsAI不能替代医疗建议。</strong>提供的营养信息为近似值。请咨询医生或营养师获取医疗建议。',
+    s4:'订阅和付款',
+    l4:['本应用提供自动续费订阅（月度和年度）。','确认购买时收取费用。','除非在当前周期结束前至少24小时取消，否则订阅将自动续费。','可从账户设置中管理或取消订阅。','当前订阅期不提供退款。','免费用户每天获得3次分析。'],
+    s5:'知识产权',
+    p5:'所有知识产权归DietsAI所有。未经书面许可，不得复制或修改。',
+    s6:'可接受的使用',
+    p6:'您同意：',
+    l6:['仅将应用用于个人目的。','不尝试未经授权访问我们的系统。','不以违反法律的方式使用应用。','不转售或再分发服务。'],
+    s7:'用户内容',
+    p7:'您保留上传的图像和数据的所有权。上传内容即表示您授予我们有限许可，仅用于为您提供服务。',
+    s8:'责任限制',
+    p8:'本应用按"现状"提供。我们不对以下情况负责：',
+    l8:['依赖营养信息造成的损害。','服务中断或数据丢失。','AI分析不准确。'],
+    s9:'服务终止',
+    p9:'如违反这些条款，我们可能暂停您的访问权限。您可以通过删除账户终止使用。',
+    s10:'条款变更',
+    p10:'我们可能会更新这些条款，并将通知您任何重大变更。',
+    s11:'适用法律',
+    p11:'这些条款受您居住国适用法律的约束。',
+    s12:'联系我们',
+    p12:'如有任何关于这些条款的问题：',
+    email:'support@dietsai.com',
+    updated:'最后更新：2026年3月'
+  },
+  fr: {
+    dir:'ltr', lang:'fr', langName:'Français',
+    title:"Conditions d'utilisation - DietsAI",
+    h1:"Conditions d'utilisation",
+    subtitle:'DietsAI - Assistant Nutritionnel IA',
+    developer:'Développeur : Issa Alhilali',
+    s1:'Acceptation des conditions',
+    p1:"En utilisant DietsAI, vous acceptez d'être lié par ces conditions d'utilisation.",
+    s2:'Description du service',
+    p2:'DietsAI est une application assistante nutritionnelle alimentée par IA. L\'app offre :',
+    l2:["Analyse d'images alimentaires par IA.","Estimation des calories et nutriments.","Suivi quotidien des repas.","Résumés nutritionnels."],
+    s3:'Avertissement médical',
+    p3:"<strong>DietsAI ne remplace pas un avis médical.</strong> Les informations nutritionnelles sont approximatives. Consultez un médecin pour des conseils médicaux.",
+    s4:'Abonnements et paiements',
+    l4:["L'app propose des abonnements à renouvellement automatique.","Le paiement est débité à la confirmation d'achat.","Les abonnements se renouvellent sauf annulation 24h avant la fin.","Gérez votre abonnement dans les paramètres.","Pas de remboursement pour la période en cours.","Les utilisateurs gratuits ont 3 analyses par jour."],
+    s5:'Propriété intellectuelle',
+    p5:"Tous les droits de propriété intellectuelle appartiennent à DietsAI. Aucune copie sans autorisation.",
+    s6:'Utilisation acceptable',
+    p6:'Vous acceptez de :',
+    l6:["Utiliser l'app à des fins personnelles uniquement.","Ne pas tenter d'accès non autorisé à nos systèmes.","Ne pas utiliser l'app illégalement.","Ne pas revendre le service."],
+    s7:'Contenu utilisateur',
+    p7:"Vous conservez la propriété des images et données téléchargées. En téléchargeant du contenu, vous nous accordez une licence limitée.",
+    s8:'Limitation de responsabilité',
+    p8:"L'app est fournie \"telle quelle\". Nous ne sommes pas responsables de :",
+    l8:["Dommages résultant des informations nutritionnelles.","Interruption de service.","Inexactitude de l'analyse IA."],
+    s9:'Résiliation',
+    p9:"Nous pouvons suspendre votre accès en cas de violation. Vous pouvez terminer l'utilisation en supprimant votre compte.",
+    s10:'Modifications des conditions',
+    p10:'Nous pouvons mettre à jour ces conditions et vous informerons des changements importants.',
+    s11:'Loi applicable',
+    p11:'Ces conditions sont régies par les lois de votre pays de résidence.',
+    s12:'Nous contacter',
+    p12:'Pour toute question sur ces conditions :',
+    email:'support@dietsai.com',
+    updated:'Dernière mise à jour : Mars 2026'
+  },
+  de: {
+    dir:'ltr', lang:'de', langName:'Deutsch',
+    title:'Nutzungsbedingungen - DietsAI',
+    h1:'Nutzungsbedingungen',
+    subtitle:'DietsAI - KI-Ernährungsassistent',
+    developer:'Entwickler: Issa Alhilali',
+    s1:'Annahme der Bedingungen',
+    p1:'Durch die Nutzung von DietsAI stimmen Sie diesen Nutzungsbedingungen zu.',
+    s2:'Dienstbeschreibung',
+    p2:'DietsAI ist eine KI-gestützte Ernährungs-App. Die App bietet:',
+    l2:['KI-basierte Lebensmittelbildanalyse.','Kalorien- und Nährstoffschätzung.','Tägliches Mahlzeit-Tracking.','Ernährungszusammenfassungen.'],
+    s3:'Medizinischer Haftungsausschluss',
+    p3:'<strong>DietsAI ersetzt keine medizinische Beratung.</strong> Ernährungsinformationen sind Schätzungen. Konsultieren Sie einen Arzt für medizinischen Rat.',
+    s4:'Abonnements und Zahlungen',
+    l4:['Die App bietet automatisch verlängernde Abonnements.','Zahlung wird bei Kaufbestätigung abgebucht.','Abonnements verlängern sich automatisch, außer sie werden 24 Stunden vor Ende gekündigt.','Verwalten Sie Ihr Abonnement in den Einstellungen.','Keine Erstattung für den aktuellen Zeitraum.','Kostenlose Nutzer erhalten 3 tägliche Analysen.'],
+    s5:'Geistiges Eigentum',
+    p5:'Alle Rechte am geistigen Eigentum gehören DietsAI. Keine Vervielfältigung ohne Genehmigung.',
+    s6:'Zulässige Nutzung',
+    p6:'Sie stimmen zu:',
+    l6:['Die App nur für persönliche Zwecke zu nutzen.','Keinen unbefugten Zugriff zu versuchen.','Die App nicht illegal zu nutzen.','Den Dienst nicht weiterzuverkaufen.'],
+    s7:'Nutzerinhalte',
+    p7:'Sie behalten das Eigentum an hochgeladenen Inhalten. Mit dem Upload gewähren Sie uns eine begrenzte Lizenz.',
+    s8:'Haftungsbeschränkung',
+    p8:'Die App wird "wie besehen" bereitgestellt. Wir haften nicht für:',
+    l8:['Schäden durch Ernährungsinformationen.','Dienstunterbrechungen.','KI-Analyse-Ungenauigkeiten.'],
+    s9:'Kündigung',
+    p9:'Wir können Ihren Zugang bei Verstößen sperren. Sie können durch Löschen Ihres Kontos kündigen.',
+    s10:'Änderungen der Bedingungen',
+    p10:'Wir können diese Bedingungen aktualisieren und informieren Sie über wesentliche Änderungen.',
+    s11:'Geltendes Recht',
+    p11:'Diese Bedingungen unterliegen den Gesetzen Ihres Wohnsitzlandes.',
+    s12:'Kontakt',
+    p12:'Bei Fragen zu diesen Bedingungen:',
+    email:'support@dietsai.com',
+    updated:'Zuletzt aktualisiert: März 2026'
+  },
+  es: {
+    dir:'ltr', lang:'es', langName:'Español',
+    title:'Términos de Uso - DietsAI',
+    h1:'Términos de Uso',
+    subtitle:'DietsAI - Asistente Nutricional IA',
+    developer:'Desarrollador: Issa Alhilali',
+    s1:'Aceptación de términos',
+    p1:'Al usar DietsAI, acepta estar sujeto a estos Términos de Uso.',
+    s2:'Descripción del servicio',
+    p2:'DietsAI es una app de asistente nutricional con IA. Ofrece:',
+    l2:['Análisis de imágenes de alimentos con IA.','Estimación de calorías y nutrientes.','Seguimiento diario de comidas.','Resúmenes nutricionales.'],
+    s3:'Descargo de responsabilidad médica',
+    p3:'<strong>DietsAI no sustituye el consejo médico.</strong> La información nutricional es aproximada. Consulte a su médico.',
+    s4:'Suscripciones y pagos',
+    l4:['La app ofrece suscripciones de renovación automática.','El pago se carga al confirmar la compra.','Las suscripciones se renuevan automáticamente salvo cancelación 24h antes.','Gestione su suscripción en la configuración.','Sin reembolsos por el período actual.','Los usuarios gratuitos reciben 3 análisis diarios.'],
+    s5:'Propiedad intelectual',
+    p5:'Todos los derechos de propiedad intelectual son de DietsAI. Sin copia sin permiso.',
+    s6:'Uso aceptable',
+    p6:'Usted acepta:',
+    l6:['Usar la app solo para fines personales.','No intentar acceso no autorizado.','No usar la app ilegalmente.','No revender el servicio.'],
+    s7:'Contenido del usuario',
+    p7:'Conserva la propiedad del contenido subido. Al subir contenido, nos otorga una licencia limitada.',
+    s8:'Limitación de responsabilidad',
+    p8:'La app se proporciona "tal cual". No somos responsables de:',
+    l8:['Daños por información nutricional.','Interrupciones del servicio.','Inexactitud del análisis IA.'],
+    s9:'Terminación',
+    p9:'Podemos suspender su acceso por violaciones. Puede terminar eliminando su cuenta.',
+    s10:'Cambios en términos',
+    p10:'Podemos actualizar estos términos y notificarle los cambios importantes.',
+    s11:'Ley aplicable',
+    p11:'Estos términos se rigen por las leyes de su país de residencia.',
+    s12:'Contáctenos',
+    p12:'Para preguntas sobre estos términos:',
+    email:'support@dietsai.com',
+    updated:'Última actualización: Marzo 2026'
+  },
+  pt: {
+    dir:'ltr', lang:'pt', langName:'Português',
+    title:'Termos de Uso - DietsAI',
+    h1:'Termos de Uso',
+    subtitle:'DietsAI - Assistente Nutricional IA',
+    developer:'Desenvolvedor: Issa Alhilali',
+    s1:'Aceitação dos termos',
+    p1:'Ao usar o DietsAI, você concorda com estes Termos de Uso.',
+    s2:'Descrição do serviço',
+    p2:'DietsAI é um app assistente nutricional com IA. O app oferece:',
+    l2:['Análise de imagens de alimentos com IA.','Estimativa de calorias e nutrientes.','Acompanhamento diário de refeições.','Resumos nutricionais.'],
+    s3:'Isenção de responsabilidade médica',
+    p3:'<strong>DietsAI não substitui aconselhamento médico.</strong> As informações nutricionais são aproximadas. Consulte seu médico.',
+    s4:'Assinaturas e pagamentos',
+    l4:['O app oferece assinaturas com renovação automática.','O pagamento é cobrado na confirmação da compra.','As assinaturas se renovam automaticamente salvo cancelamento 24h antes.','Gerencie sua assinatura nas configurações.','Sem reembolsos pelo período atual.','Usuários gratuitos recebem 3 análises diárias.'],
+    s5:'Propriedade intelectual',
+    p5:'Todos os direitos de propriedade intelectual são do DietsAI. Sem cópia sem permissão.',
+    s6:'Uso aceitável',
+    p6:'Você concorda em:',
+    l6:['Usar o app apenas para fins pessoais.','Não tentar acesso não autorizado.','Não usar o app ilegalmente.','Não revender o serviço.'],
+    s7:'Conteúdo do usuário',
+    p7:'Você mantém a propriedade do conteúdo enviado. Ao enviar, concede-nos uma licença limitada.',
+    s8:'Limitação de responsabilidade',
+    p8:'O app é fornecido "como está". Não somos responsáveis por:',
+    l8:['Danos por informações nutricionais.','Interrupções do serviço.','Imprecisão da análise IA.'],
+    s9:'Rescisão',
+    p9:'Podemos suspender seu acesso por violações. Você pode encerrar excluindo sua conta.',
+    s10:'Alterações nos termos',
+    p10:'Podemos atualizar estes termos e notificá-lo sobre alterações importantes.',
+    s11:'Lei aplicável',
+    p11:'Estes termos são regidos pelas leis do seu país de residência.',
+    s12:'Contate-nos',
+    p12:'Para dúvidas sobre estes termos:',
+    email:'support@dietsai.com',
+    updated:'Última atualização: Março 2026'
+  },
+  it: {
+    dir:'ltr', lang:'it', langName:'Italiano',
+    title:"Termini di Utilizzo - DietsAI",
+    h1:'Termini di Utilizzo',
+    subtitle:'DietsAI - Assistente Nutrizionale IA',
+    developer:'Sviluppatore: Issa Alhilali',
+    s1:'Accettazione dei termini',
+    p1:"Utilizzando DietsAI, accetti di essere vincolato da questi Termini di Utilizzo.",
+    s2:'Descrizione del servizio',
+    p2:"DietsAI è un'app assistente nutrizionale basata sull'IA. L'app offre:",
+    l2:["Analisi di immagini alimentari tramite IA.","Stima di calorie e nutrienti.","Tracciamento giornaliero dei pasti.","Riepilogi nutrizionali."],
+    s3:'Avvertenza medica',
+    p3:"<strong>DietsAI non sostituisce il parere medico.</strong> Le informazioni nutrizionali sono stime. Consulta un medico.",
+    s4:'Abbonamenti e pagamenti',
+    l4:["L'app offre abbonamenti a rinnovo automatico.","Il pagamento viene addebitato alla conferma dell'acquisto.","Gli abbonamenti si rinnovano automaticamente salvo cancellazione 24h prima.","Gestisci l'abbonamento dalle impostazioni.","Nessun rimborso per il periodo corrente.","Gli utenti gratuiti ricevono 3 analisi al giorno."],
+    s5:'Proprietà intellettuale',
+    p5:"Tutti i diritti di proprietà intellettuale appartengono a DietsAI. Nessuna copia senza autorizzazione.",
+    s6:'Uso accettabile',
+    p6:'Accetti di:',
+    l6:["Usare l'app solo per scopi personali.","Non tentare accessi non autorizzati.","Non usare l'app illegalmente.","Non rivendere il servizio."],
+    s7:'Contenuto utente',
+    p7:"Mantieni la proprietà dei contenuti caricati. Caricando contenuti, ci concedi una licenza limitata.",
+    s8:'Limitazione di responsabilità',
+    p8:'"L\'app è fornita "così com\'è". Non siamo responsabili per:',
+    l8:["Danni derivanti da informazioni nutrizionali.","Interruzioni del servizio.","Inesattezze dell'analisi IA."],
+    s9:'Cessazione',
+    p9:"Possiamo sospendere il tuo accesso per violazioni. Puoi terminare eliminando il tuo account.",
+    s10:'Modifiche ai termini',
+    p10:'Potremmo aggiornare questi termini e ti notificheremo le modifiche importanti.',
+    s11:'Legge applicabile',
+    p11:'Questi termini sono regolati dalle leggi del tuo paese di residenza.',
+    s12:'Contattaci',
+    p12:'Per domande su questi termini:',
+    email:'support@dietsai.com',
+    updated:'Ultimo aggiornamento: Marzo 2026'
+  },
+  nl: {
+    dir:'ltr', lang:'nl', langName:'Nederlands',
+    title:'Gebruiksvoorwaarden - DietsAI',
+    h1:'Gebruiksvoorwaarden',
+    subtitle:'DietsAI - AI Voedingsassistent',
+    developer:'Ontwikkelaar: Issa Alhilali',
+    s1:'Aanvaarding van voorwaarden',
+    p1:'Door DietsAI te gebruiken, gaat u akkoord met deze Gebruiksvoorwaarden.',
+    s2:'Servicebeschrijving',
+    p2:'DietsAI is een AI-gestuurde voedingsassistent. De app biedt:',
+    l2:['AI-analyse van voedselafbeeldingen.','Schatting van calorieën en voedingsstoffen.','Dagelijks bijhouden van maaltijden.','Voedingssamenvatting.'],
+    s3:'Medische disclaimer',
+    p3:'<strong>DietsAI vervangt geen medisch advies.</strong> Voedingsinformatie is approximatief. Raadpleeg een arts.',
+    s4:'Abonnementen en betalingen',
+    l4:['De app biedt automatisch verlengbare abonnementen.','Betaling wordt verrekend bij bevestiging.','Abonnementen verlengen automatisch tenzij 24u van tevoren opgezegd.','Beheer uw abonnement via instellingen.','Geen terugbetaling voor huidige periode.','Gratis gebruikers ontvangen 3 dagelijkse analyses.'],
+    s5:'Intellectueel eigendom',
+    p5:'Alle intellectuele eigendomsrechten zijn van DietsAI. Geen kopie zonder toestemming.',
+    s6:'Aanvaardbaar gebruik',
+    p6:'U gaat akkoord met:',
+    l6:['De app alleen voor persoonlijk gebruik.','Geen onbevoegde toegangspogingen.','Geen illegaal gebruik.','Geen doorverkoop.'],
+    s7:'Gebruikersinhoud',
+    p7:'U behoudt eigendom van geüploade inhoud. Door inhoud te uploaden, verleent u ons een beperkte licentie.',
+    s8:'Aansprakelijkheidsbeperking',
+    p8:'De app wordt geleverd "zoals het is". Wij zijn niet verantwoordelijk voor:',
+    l8:['Schade door voedingsinformatie.','Serviceonderbrekingen.','Onnauwkeurigheid van AI-analyse.'],
+    s9:'Beëindiging',
+    p9:'Wij kunnen uw toegang schorsen bij overtredingen. U kunt beëindigen door uw account te verwijderen.',
+    s10:'Wijzigingen in voorwaarden',
+    p10:'Wij kunnen deze voorwaarden bijwerken en u informeren over wezenlijke wijzigingen.',
+    s11:'Toepasselijk recht',
+    p11:'Deze voorwaarden worden beheerst door de wetten van uw woonland.',
+    s12:'Contact',
+    p12:'Voor vragen over deze voorwaarden:',
+    email:'support@dietsai.com',
+    updated:'Laatste update: Maart 2026'
+  },
+  ru: {
+    dir:'ltr', lang:'ru', langName:'Русский',
+    title:'Условия использования - DietsAI',
+    h1:'Условия использования',
+    subtitle:'DietsAI - ИИ-помощник по питанию',
+    developer:'Разработчик: Issa Alhilali',
+    s1:'Принятие условий',
+    p1:'Используя DietsAI, вы соглашаетесь с настоящими Условиями использования.',
+    s2:'Описание сервиса',
+    p2:'DietsAI — приложение-помощник по питанию на основе ИИ. Приложение предоставляет:',
+    l2:['Анализ изображений еды с помощью ИИ.','Оценку калорий и питательных веществ.','Ежедневное отслеживание приёмов пищи.','Сводки по питанию.'],
+    s3:'Медицинский отказ от ответственности',
+    p3:'<strong>DietsAI не заменяет медицинскую консультацию.</strong> Информация о питании является приблизительной. Обратитесь к врачу.',
+    s4:'Подписки и платежи',
+    l4:['Приложение предлагает подписки с автопродлением.','Оплата списывается при подтверждении покупки.','Подписки продлеваются автоматически, если не отменены за 24 часа до конца периода.','Управляйте подпиской в настройках.','Возврат средств за текущий период невозможен.','Бесплатные пользователи получают 3 анализа в день.'],
+    s5:'Интеллектуальная собственность',
+    p5:'Все права на интеллектуальную собственность принадлежат DietsAI. Копирование без разрешения запрещено.',
+    s6:'Допустимое использование',
+    p6:'Вы соглашаетесь:',
+    l6:['Использовать приложение только в личных целях.','Не предпринимать попыток несанкционированного доступа.','Не использовать приложение незаконно.','Не перепродавать сервис.'],
+    s7:'Пользовательский контент',
+    p7:'Вы сохраняете право собственности на загруженный контент. Загружая контент, вы предоставляете нам ограниченную лицензию.',
+    s8:'Ограничение ответственности',
+    p8:'Приложение предоставляется "как есть". Мы не несём ответственности за:',
+    l8:['Ущерб от использования информации о питании.','Перебои в работе сервиса.','Неточность ИИ-анализа.'],
+    s9:'Прекращение доступа',
+    p9:'Мы можем приостановить ваш доступ при нарушении условий. Вы можете прекратить использование, удалив аккаунт.',
+    s10:'Изменения условий',
+    p10:'Мы можем обновить эти условия и уведомим вас о существенных изменениях.',
+    s11:'Применимое право',
+    p11:'Настоящие условия регулируются законами страны вашего проживания.',
+    s12:'Связаться с нами',
+    p12:'По вопросам об этих условиях:',
+    email:'support@dietsai.com',
+    updated:'Последнее обновление: Март 2026'
+  },
+  tr: {
+    dir:'ltr', lang:'tr', langName:'Türkçe',
+    title:'Kullanım Koşulları - DietsAI',
+    h1:'Kullanım Koşulları',
+    subtitle:'DietsAI - Yapay Zeka Beslenme Asistanı',
+    developer:'Geliştirici: Issa Alhilali',
+    s1:'Koşulların kabulü',
+    p1:"DietsAI'yı kullanarak bu Kullanım Koşullarını kabul etmiş olursunuz.",
+    s2:'Hizmet açıklaması',
+    p2:"DietsAI, yapay zeka destekli bir beslenme asistan uygulamasıdır. Uygulama şunları sunar:",
+    l2:['Yapay zeka ile gıda görüntüsü analizi.','Kalori ve besin tahmini.','Günlük öğün takibi.','Beslenme özetleri.'],
+    s3:'Tıbbi sorumluluk reddi',
+    p3:'<strong>DietsAI tıbbi tavsiyenin yerini tutmaz.</strong> Beslenme bilgileri yaklaşıktır. Tıbbi tavsiye için doktorunuza danışın.',
+    s4:'Abonelikler ve ödemeler',
+    l4:['Uygulama otomatik yenilenen abonelikler sunar.','Ödeme, satın alma onayında tahsil edilir.','Abonelikler, dönem sonu 24 saat öncesinden iptal edilmedikçe otomatik yenilenir.','Aboneliğinizi ayarlardan yönetin.','Mevcut dönem için iade yapılmaz.','Ücretsiz kullanıcılar günlük 3 analiz alır.'],
+    s5:'Fikri mülkiyet',
+    p5:"Tüm fikri mülkiyet hakları DietsAI'ya aittir. İzin olmadan kopyalama yasaktır.",
+    s6:'Kabul edilebilir kullanım',
+    p6:'Aşağıdakileri kabul edersiniz:',
+    l6:["Uygulamayı yalnızca kişisel amaçlarla kullanmak.","Sistemlerimize yetkisiz erişim girişiminde bulunmamak.","Uygulamayı yasadışı kullanmamak.","Hizmeti yeniden satmamak."],
+    s7:'Kullanıcı içeriği',
+    p7:'Yüklediğiniz içeriğin mülkiyetini korursunuz. İçerik yükleyerek bize sınırlı lisans verirsiniz.',
+    s8:'Sorumluluk sınırlaması',
+    p8:'"Uygulama "olduğu gibi" sunulmaktadır. Aşağıdakilerden sorumlu değiliz:',
+    l8:['Beslenme bilgilerine dayanmaktan kaynaklanan zararlar.','Hizmet kesintileri.','Yapay zeka analiz hataları.'],
+    s9:'Fesih',
+    p9:'İhlaller durumunda erişiminizi askıya alabiliriz. Hesabınızı silerek kullanımı sonlandırabilirsiniz.',
+    s10:'Koşullardaki değişiklikler',
+    p10:'Bu koşulları güncelleyebilir ve önemli değişiklikler hakkında sizi bilgilendirebiliriz.',
+    s11:'Geçerli hukuk',
+    p11:'Bu koşullar, ikamet ettiğiniz ülkenin yasalarına tabidir.',
+    s12:'Bize ulaşın',
+    p12:'Bu koşullarla ilgili sorular için:',
+    email:'support@dietsai.com',
+    updated:'Son güncelleme: Mart 2026'
+  },
+  ja: {
+    dir:'ltr', lang:'ja', langName:'日本語',
+    title:'利用規約 - DietsAI',
+    h1:'利用規約',
+    subtitle:'DietsAI - AI栄養アシスタント',
+    developer:'開発者：Issa Alhilali',
+    s1:'規約の同意',
+    p1:'DietsAIを使用することで、この利用規約に同意したものとみなされます。',
+    s2:'サービスの説明',
+    p2:'DietsAIはAI搭載の栄養アシスタントアプリです。アプリは以下を提供します：',
+    l2:['AIによる食品画像分析。','カロリーと栄養素の推定。','毎日の食事トラッキング。','栄養サマリー。'],
+    s3:'医療免責事項',
+    p3:'<strong>DietsAIは医療アドバイスの代替ではありません。</strong>栄養情報は概算です。医療アドバイスは医師に相談してください。',
+    s4:'サブスクリプションと支払い',
+    l4:['アプリは自動更新サブスクリプションを提供します。','購入確認時に請求されます。','サブスクリプションは期間終了24時間前にキャンセルしない限り自動更新されます。','設定からサブスクリプションを管理できます。','現在の期間の返金はありません。','無料ユーザーは1日3回の分析を受けられます。'],
+    s5:'知的財産権',
+    p5:'すべての知的財産権はDietsAIに帰属します。許可なく複製することはできません。',
+    s6:'利用規定',
+    p6:'以下に同意します：',
+    l6:['個人目的のみでアプリを使用する。','システムへの不正アクセスを試みない。','違法にアプリを使用しない。','サービスを再販しない。'],
+    s7:'ユーザーコンテンツ',
+    p7:'アップロードしたコンテンツの所有権を保持します。コンテンツをアップロードすることで、限定ライセンスを付与します。',
+    s8:'責任の制限',
+    p8:'アプリは「現状のまま」提供されます。以下については責任を負いません：',
+    l8:['栄養情報への依存による損害。','サービスの中断。','AI分析の不正確さ。'],
+    s9:'解約',
+    p9:'違反の場合はアクセスを停止する場合があります。アカウントを削除することで利用を終了できます。',
+    s10:'規約の変更',
+    p10:'これらの規約を更新する場合があり、重要な変更についてお知らせします。',
+    s11:'準拠法',
+    p11:'これらの規約はお客様の居住国の法律に準拠します。',
+    s12:'お問い合わせ',
+    p12:'これらの規約に関するご質問：',
+    email:'support@dietsai.com',
+    updated:'最終更新：2026年3月'
+  },
+  ko: {
+    dir:'ltr', lang:'ko', langName:'한국어',
+    title:'이용약관 - DietsAI',
+    h1:'이용약관',
+    subtitle:'DietsAI - AI 영양 어시스턴트',
+    developer:'개발자: Issa Alhilali',
+    s1:'약관 동의',
+    p1:'DietsAI를 사용함으로써 이 이용약관에 동의하는 것으로 간주됩니다.',
+    s2:'서비스 설명',
+    p2:'DietsAI는 AI 기반 영양 어시스턴트 앱입니다. 앱은 다음을 제공합니다:',
+    l2:['AI 기반 식품 이미지 분석.','칼로리 및 영양소 추정.','일일 식사 추적.','영양 요약.'],
+    s3:'의료 면책 조항',
+    p3:'<strong>DietsAI는 의료 조언을 대체하지 않습니다.</strong> 영양 정보는 근사치입니다. 의료 조언은 의사에게 상담하세요.',
+    s4:'구독 및 결제',
+    l4:['앱은 자동 갱신 구독을 제공합니다.','구매 확인 시 결제됩니다.','구독은 기간 종료 24시간 전에 취소하지 않으면 자동 갱신됩니다.','설정에서 구독을 관리할 수 있습니다.','현재 기간에 대한 환불 없음.','무료 사용자는 하루 3번의 분석을 받습니다.'],
+    s5:'지적 재산권',
+    p5:'모든 지적 재산권은 DietsAI에 귀속됩니다. 허가 없이 복제 불가.',
+    s6:'허용 가능한 사용',
+    p6:'다음에 동의합니다:',
+    l6:['개인 목적으로만 앱 사용.','무단 액세스 시도 금지.','앱의 불법 사용 금지.','서비스 재판매 금지.'],
+    s7:'사용자 콘텐츠',
+    p7:'업로드한 콘텐츠의 소유권을 유지합니다. 콘텐츠를 업로드함으로써 제한적 라이선스를 부여합니다.',
+    s8:'책임 제한',
+    p8:'앱은 "있는 그대로" 제공됩니다. 다음에 대해 책임지지 않습니다:',
+    l8:['영양 정보 의존으로 인한 손해.','서비스 중단.','AI 분석 부정확성.'],
+    s9:'종료',
+    p9:'위반 시 접근을 정지할 수 있습니다. 계정을 삭제하여 사용을 종료할 수 있습니다.',
+    s10:'약관 변경',
+    p10:'약관을 업데이트할 수 있으며 중요한 변경 사항을 알려드립니다.',
+    s11:'준거법',
+    p11:'이 약관은 귀하의 거주 국가 법률에 따라 규율됩니다.',
+    s12:'문의',
+    p12:'이 약관에 관한 문의:',
+    email:'support@dietsai.com',
+    updated:'최종 업데이트: 2026년 3월'
+  },
+  hi: {
+    dir:'ltr', lang:'hi', langName:'हिन्दी',
+    title:'उपयोग की शर्तें - DietsAI',
+    h1:'उपयोग की शर्तें',
+    subtitle:'DietsAI - AI पोषण सहायक',
+    developer:'डेवलपर: Issa Alhilali',
+    s1:'शर्तों की स्वीकृति',
+    p1:'DietsAI का उपयोग करके, आप इन उपयोग की शर्तों से बाध्य होने के लिए सहमत होते हैं।',
+    s2:'सेवा विवरण',
+    p2:'DietsAI एक AI-संचालित पोषण सहायक ऐप है। ऐप प्रदान करता है:',
+    l2:['AI-आधारित खाद्य छवि विश्लेषण।','कैलोरी और पोषक तत्व अनुमान।','दैनिक भोजन ट्रैकिंग।','पोषण सारांश।'],
+    s3:'चिकित्सा अस्वीकरण',
+    p3:'<strong>DietsAI चिकित्सा सलाह का विकल्प नहीं है।</strong> पोषण जानकारी अनुमानित है। चिकित्सा सलाह के लिए डॉक्टर से परामर्श करें।',
+    s4:'सदस्यता और भुगतान',
+    l4:['ऐप स्वतः नवीकरण सदस्यता प्रदान करता है।','खरीद पुष्टि पर भुगतान लिया जाता है।','सदस्यता स्वतः नवीकरण होती है जब तक कि अवधि समाप्ति से 24 घंटे पहले रद्द न की जाए।','सेटिंग्स से सदस्यता प्रबंधित करें।','वर्तमान अवधि के लिए कोई वापसी नहीं।','मुफ्त उपयोगकर्ताओं को प्रतिदिन 3 विश्लेषण मिलते हैं।'],
+    s5:'बौद्धिक संपदा',
+    p5:'सभी बौद्धिक संपदा अधिकार DietsAI के हैं। बिना अनुमति के नकल न करें।',
+    s6:'स्वीकार्य उपयोग',
+    p6:'आप सहमत हैं:',
+    l6:['केवल व्यक्तिगत उद्देश्यों के लिए ऐप का उपयोग।','हमारे सिस्टम तक अनधिकृत पहुंच का प्रयास न करना।','ऐप का अवैध उपयोग न करना।','सेवा को फिर से न बेचना।'],
+    s7:'उपयोगकर्ता सामग्री',
+    p7:'अपलोड की गई सामग्री का स्वामित्व आपके पास रहता है। अपलोड करके आप सीमित लाइसेंस प्रदान करते हैं।',
+    s8:'दायित्व की सीमा',
+    p8:'ऐप "जैसा है" प्रदान किया जाता है। हम इनके लिए जिम्मेदार नहीं हैं:',
+    l8:['पोषण जानकारी पर निर्भरता से नुकसान।','सेवा में रुकावट।','AI विश्लेषण की अशुद्धि।'],
+    s9:'समाप्ति',
+    p9:'उल्लंघन पर हम आपकी पहुंच निलंबित कर सकते हैं। आप खाता हटाकर उपयोग समाप्त कर सकते हैं।',
+    s10:'शर्तों में परिवर्तन',
+    p10:'हम इन शर्तों को अपडेट कर सकते हैं और महत्वपूर्ण परिवर्तनों की सूचना देंगे।',
+    s11:'शासी कानून',
+    p11:'ये शर्तें आपके निवास देश के कानूनों द्वारा नियंत्रित हैं।',
+    s12:'हमसे संपर्क करें',
+    p12:'इन शर्तों के बारे में प्रश्नों के लिए:',
+    email:'support@dietsai.com',
+    updated:'अंतिम अद्यतन: मार्च 2026'
+  },
+  bn: {
+    dir:'ltr', lang:'bn', langName:'বাংলা',
+    title:'ব্যবহারের শর্তাবলী - DietsAI',
+    h1:'ব্যবহারের শর্তাবলী',
+    subtitle:'DietsAI - AI পুষ্টি সহকারী',
+    developer:'ডেভেলপার: Issa Alhilali',
+    s1:'শর্ত গ্রহণ',
+    p1:'DietsAI ব্যবহার করে, আপনি এই ব্যবহারের শর্তাবলীতে আবদ্ধ হতে সম্মত হচ্ছেন।',
+    s2:'সেবার বিবরণ',
+    p2:'DietsAI একটি AI-চালিত পুষ্টি সহকারী অ্যাপ। অ্যাপটি প্রদান করে:',
+    l2:['AI-ভিত্তিক খাদ্য চিত্র বিশ্লেষণ।','ক্যালোরি ও পুষ্টি অনুমান।','দৈনিক খাবার ট্র্যাকিং।','পুষ্টি সারসংক্ষেপ।'],
+    s3:'চিকিৎসা দাবিত্যাগ',
+    p3:'<strong>DietsAI চিকিৎসা পরামর্শের বিকল্প নয়।</strong> পুষ্টি তথ্য আনুমানিক। চিকিৎসা পরামর্শের জন্য ডাক্তারের পরামর্শ নিন।',
+    s4:'সাবস্ক্রিপশন ও পেমেন্ট',
+    l4:['অ্যাপটি স্বয়ংক্রিয় নবায়ন সাবস্ক্রিপশন অফার করে।','কেনার নিশ্চিতকরণে পেমেন্ট নেওয়া হয়।','মেয়াদ শেষের ২৪ ঘন্টা আগে বাতিল না করলে স্বয়ংক্রিয়ভাবে নবায়ন হয়।','সেটিংস থেকে সাবস্ক্রিপশন পরিচালনা করুন।','বর্তমান মেয়াদের জন্য ফেরত নেই।','বিনামূল্যে ব্যবহারকারীরা প্রতিদিন ৩টি বিশ্লেষণ পান।'],
+    s5:'মেধাস্বত্ব',
+    p5:'সমস্ত মেধাস্বত্ব DietsAI-এর। অনুমতি ছাড়া কপি করা যাবে না।',
+    s6:'গ্রহণযোগ্য ব্যবহার',
+    p6:'আপনি সম্মত হন:',
+    l6:['শুধুমাত্র ব্যক্তিগত উদ্দেশ্যে অ্যাপ ব্যবহার।','অননুমোদিত প্রবেশের চেষ্টা না করা।','অবৈধভাবে অ্যাপ ব্যবহার না করা।','সেবা পুনরায় বিক্রি না করা।'],
+    s7:'ব্যবহারকারীর বিষয়বস্তু',
+    p7:'আপলোড করা বিষয়বস্তুর মালিকানা আপনার কাছে থাকে। আপলোড করে আপনি সীমিত লাইসেন্স দেন।',
+    s8:'দায়বদ্ধতার সীমাবদ্ধতা',
+    p8:'অ্যাপটি "যেমন আছে" তেমনি সরবরাহ করা হয়। আমরা এর জন্য দায়ী নই:',
+    l8:['পুষ্টি তথ্যের উপর নির্ভরতা থেকে ক্ষতি।','সেবা বিঘ্ন।','AI বিশ্লেষণের অনির্ভুলতা।'],
+    s9:'সমাপ্তি',
+    p9:'লঙ্ঘনের ক্ষেত্রে আমরা আপনার অ্যাক্সেস স্থগিত করতে পারি। অ্যাকাউন্ট মুছে ব্যবহার শেষ করতে পারেন।',
+    s10:'শর্ত পরিবর্তন',
+    p10:'আমরা এই শর্তগুলি আপডেট করতে পারি এবং গুরুত্বপূর্ণ পরিবর্তন সম্পর্কে জানাব।',
+    s11:'পরিচালনাকারী আইন',
+    p11:'এই শর্তগুলি আপনার বাসস্থানের দেশের আইন দ্বারা পরিচালিত হয়।',
+    s12:'যোগাযোগ',
+    p12:'এই শর্তাবলী সম্পর্কে প্রশ্নের জন্য:',
+    email:'support@dietsai.com',
+    updated:'সর্বশেষ আপডেট: মার্চ ২০২৬'
+  },
+  ur: {
+    dir:'rtl', lang:'ur', langName:'اردو',
+    title:'استعمال کی شرائط - DietsAI',
+    h1:'استعمال کی شرائط',
+    subtitle:'DietsAI - AI غذائیت اسسٹنٹ',
+    developer:'ڈویلپر: Issa Alhilali',
+    s1:'شرائط کی قبولیت',
+    p1:'.DietsAI استعمال کرکے، آپ ان استعمال کی شرائط سے پابند ہونے پر رضامند ہوتے ہیں',
+    s2:'سروس کی تفصیل',
+    p2:'.DietsAI ایک AI سے چلنے والی غذائیت اسسٹنٹ ایپ ہے۔ ایپ فراہم کرتی ہے',
+    l2:['AI پر مبنی کھانے کی تصویر کا تجزیہ۔','کیلوریز اور غذائی اجزاء کا تخمینہ۔','روزانہ کھانے کی ٹریکنگ۔','غذائیت کا خلاصہ۔'],
+    s3:'طبی دستبرداری',
+    p3:'<strong>DietsAI طبی مشورے کا متبادل نہیں ہے۔</strong> غذائی معلومات تقریبی ہیں۔ طبی مشورے کے لیے ڈاکٹر سے رجوع کریں۔',
+    s4:'سبسکرپشن اور ادائیگی',
+    l4:['ایپ خودکار تجدید سبسکرپشن پیش کرتی ہے۔','خریداری کی تصدیق پر ادائیگی لی جاتی ہے۔','مدت ختم ہونے سے 24 گھنٹے پہلے منسوخ نہ کریں تو خودکار تجدید ہوتی ہے۔','ترتیبات سے سبسکرپشن منظم کریں۔','موجودہ مدت کی واپسی نہیں۔','مفت صارفین کو روزانہ 3 تجزیے ملتے ہیں۔'],
+    s5:'دانشورانہ ملکیت',
+    p5:'تمام دانشورانہ ملکیت کے حقوق DietsAI کے ہیں۔ اجازت کے بغیر نقل منع ہے۔',
+    s6:'قابل قبول استعمال',
+    p6:':آپ اس بات سے متفق ہیں',
+    l6:['ایپ کو صرف ذاتی مقاصد کے لیے استعمال کریں۔','ہمارے سسٹم تک غیر مجاز رسائی کی کوشش نہ کریں۔','ایپ کو غیر قانونی طور پر استعمال نہ کریں۔','سروس کو دوبارہ نہ فروخت کریں۔'],
+    s7:'صارف مواد',
+    p7:'اپ لوڈ کردہ مواد کی ملکیت آپ کے پاس رہتی ہے۔ اپ لوڈ کرکے آپ محدود لائسنس دیتے ہیں۔',
+    s8:'ذمہ داری کی حد',
+    p8:'ایپ "جیسی ہے" فراہم کی جاتی ہے۔ ہم ان کے لیے ذمہ دار نہیں:',
+    l8:['غذائی معلومات پر انحصار سے نقصان۔','سروس میں خلل۔','AI تجزیے کی غیر درستگی۔'],
+    s9:'خاتمہ',
+    p9:'خلاف ورزی پر ہم آپ کی رسائی معطل کر سکتے ہیں۔ اکاؤنٹ حذف کرکے استعمال ختم کر سکتے ہیں۔',
+    s10:'شرائط میں تبدیلیاں',
+    p10:'ہم ان شرائط کو اپ ڈیٹ کر سکتے ہیں اور اہم تبدیلیوں کی اطلاع دیں گے۔',
+    s11:'حکمران قانون',
+    p11:'یہ شرائط آپ کے رہائشی ملک کے قوانین کے تابع ہیں۔',
+    s12:'ہم سے رابطہ',
+    p12:'ان شرائط کے بارے میں سوالات کے لیے:',
+    email:'support@dietsai.com',
+    updated:'آخری اپ ڈیٹ: مارچ 2026'
+  },
+  fa: {
+    dir:'rtl', lang:'fa', langName:'فارسی',
+    title:'شرایط استفاده - DietsAI',
+    h1:'شرایط استفاده',
+    subtitle:'DietsAI - دستیار تغذیه هوش مصنوعی',
+    developer:'توسعه‌دهنده: Issa Alhilali',
+    s1:'پذیرش شرایط',
+    p1:'با استفاده از DietsAI، موافقت خود را با این شرایط استفاده اعلام می‌کنید.',
+    s2:'توضیح سرویس',
+    p2:'DietsAI یک اپ دستیار تغذیه مبتنی بر هوش مصنوعی است. اپ ارائه می‌دهد:',
+    l2:['تحلیل تصویر غذا با هوش مصنوعی.','تخمین کالری و مواد مغذی.','ردیابی روزانه وعده‌های غذایی.','خلاصه‌های تغذیه‌ای.'],
+    s3:'سلب مسئولیت پزشکی',
+    p3:'<strong>DietsAI جایگزین مشاوره پزشکی نیست.</strong> اطلاعات تغذیه‌ای تقریبی است. برای مشاوره پزشکی با پزشک مشورت کنید.',
+    s4:'اشتراک‌ها و پرداخت‌ها',
+    l4:['اپ اشتراک‌های با تجدید خودکار ارائه می‌دهد.','پرداخت در تأیید خرید دریافت می‌شود.','اشتراک‌ها تا زمانی که ۲۴ ساعت قبل از پایان دوره لغو نشوند تجدید می‌شوند.','اشتراک خود را از تنظیمات مدیریت کنید.','بازپرداخت برای دوره جاری وجود ندارد.','کاربران رایگان روزانه ۳ آنالیز دریافت می‌کنند.'],
+    s5:'مالکیت فکری',
+    p5:'تمام حقوق مالکیت فکری متعلق به DietsAI است. کپی بدون اجازه مجاز نیست.',
+    s6:'استفاده قابل قبول',
+    p6:'موافقت می‌کنید با:',
+    l6:['استفاده از اپ فقط برای مقاصد شخصی.','عدم تلاش برای دسترسی غیرمجاز.','عدم استفاده غیرقانونی از اپ.','عدم فروش مجدد سرویس.'],
+    s7:'محتوای کاربر',
+    p7:'مالکیت محتوای بارگذاری‌شده را حفظ می‌کنید. با بارگذاری محتوا، مجوز محدودی اعطا می‌کنید.',
+    s8:'محدودیت مسئولیت',
+    p8:'اپ "همانطور که هست" ارائه می‌شود. مسئول موارد زیر نیستیم:',
+    l8:['خسارات ناشی از اتکا به اطلاعات تغذیه‌ای.','قطع سرویس.','عدم دقت آنالیز هوش مصنوعی.'],
+    s9:'خاتمه',
+    p9:'در صورت نقض شرایط، دسترسی شما را تعلیق می‌کنیم. با حذف حساب می‌توانید استفاده را پایان دهید.',
+    s10:'تغییرات در شرایط',
+    p10:'ممکن است این شرایط را به‌روزرسانی کنیم و از تغییرات مهم آگاه می‌سازیم.',
+    s11:'قانون حاکم',
+    p11:'این شرایط تابع قوانین کشور محل اقامت شماست.',
+    s12:'تماس با ما',
+    p12:'برای سؤالات درباره این شرایط:',
+    email:'support@dietsai.com',
+    updated:'آخرین به‌روزرسانی: مارس ۲۰۲۶'
+  },
+  ms: {
+    dir:'ltr', lang:'ms', langName:'Melayu',
+    title:'Terma Penggunaan - DietsAI',
+    h1:'Terma Penggunaan',
+    subtitle:'DietsAI - Pembantu Pemakanan AI',
+    developer:'Pembangun: Issa Alhilali',
+    s1:'Penerimaan terma',
+    p1:'Dengan menggunakan DietsAI, anda bersetuju untuk terikat dengan Terma Penggunaan ini.',
+    s2:'Penerangan perkhidmatan',
+    p2:'DietsAI adalah apl pembantu pemakanan berkuasa AI. Apl menyediakan:',
+    l2:['Analisis imej makanan dengan AI.','Anggaran kalori dan nutrien.','Penjejakan hidangan harian.','Ringkasan pemakanan.'],
+    s3:'Penafian perubatan',
+    p3:'<strong>DietsAI bukan pengganti nasihat perubatan.</strong> Maklumat pemakanan adalah anggaran. Rujuk doktor untuk nasihat perubatan.',
+    s4:'Langganan dan pembayaran',
+    l4:['Apl menawarkan langganan pembaharuan automatik.','Pembayaran dicaj semasa pengesahan pembelian.','Langganan diperbaharui secara automatik melainkan dibatalkan 24j sebelum tamat.','Urus langganan anda dari tetapan.','Tiada bayaran balik untuk tempoh semasa.','Pengguna percuma mendapat 3 analisis sehari.'],
+    s5:'Harta intelek',
+    p5:'Semua hak harta intelek dimiliki oleh DietsAI. Tiada salinan tanpa kebenaran.',
+    s6:'Penggunaan yang boleh diterima',
+    p6:'Anda bersetuju untuk:',
+    l6:['Menggunakan apl hanya untuk tujuan peribadi.','Tidak mencuba akses tanpa kebenaran.','Tidak menggunakan apl secara haram.','Tidak menjual semula perkhidmatan.'],
+    s7:'Kandungan pengguna',
+    p7:'Anda mengekalkan pemilikan kandungan yang dimuat naik. Dengan memuat naik, anda memberikan lesen terhad.',
+    s8:'Had tanggungjawab',
+    p8:'Apl disediakan "sebagaimana adanya". Kami tidak bertanggungjawab atas:',
+    l8:['Kerosakan akibat maklumat pemakanan.','Gangguan perkhidmatan.','Ketidaktepatan analisis AI.'],
+    s9:'Penamatan',
+    p9:'Kami boleh menggantung akses anda atas pelanggaran. Anda boleh menamatkan dengan memadam akaun.',
+    s10:'Perubahan terma',
+    p10:'Kami mungkin mengemas kini terma ini dan akan memberitahu anda tentang perubahan penting.',
+    s11:'Undang-undang yang mengawal',
+    p11:'Terma ini dikawal oleh undang-undang negara kediaman anda.',
+    s12:'Hubungi kami',
+    p12:'Untuk pertanyaan tentang terma ini:',
+    email:'support@dietsai.com',
+    updated:'Kemas kini terakhir: Mac 2026'
+  }
+};
 
-        <h2>وصف الخدمة</h2>
-        <p>DietsAI هو تطبيق مساعد تغذية يستخدم تقنيات الذكاء الاصطناعي لتحليل الوجبات الغذائية وتقديم معلومات غذائية تقديرية. التطبيق يقدم:</p>
-        <ul>
-            <li>تحليل صور الطعام باستخدام الذكاء الاصطناعي</li>
-            <li>تقدير السعرات الحرارية والعناصر الغذائية</li>
-            <li>تتبع الوجبات اليومية</li>
-            <li>ملخصات غذائية</li>
-        </ul>
+const RTL_LANGS = new Set(['ar','ur','fa']);
+const LANG_MAP = {
+  'ar':'ar','en':'en','zh':'zh','zh-hans':'zh','zh-hant':'zh','zh-cn':'zh','zh-tw':'zh',
+  'fr':'fr','de':'de','es':'es','pt':'pt','it':'it','nl':'nl','ru':'ru',
+  'tr':'tr','ja':'ja','ko':'ko','hi':'hi','bn':'bn','ur':'ur','fa':'fa','ms':'ms'
+};
 
-        <h2>إخلاء المسؤولية الطبية</h2>
-        <p><strong>DietsAI ليس بديلاً عن الاستشارة الطبية.</strong> المعلومات الغذائية المقدمة هي تقديرات تقريبية تعتمد على تحليل الذكاء الاصطناعي وقد لا تكون دقيقة بنسبة 100%. لا يجب الاعتماد على التطبيق لاتخاذ قرارات طبية أو غذائية حرجة. استشر طبيبك أو أخصائي التغذية للحصول على نصائح طبية متخصصة.</p>
+function detectLang() {
+  const saved = localStorage.getItem('dietsai_lang');
+  if (saved && T[saved]) return saved;
+  const langs = navigator.languages || [navigator.language || 'en'];
+  for (const l of langs) {
+    const code = l.toLowerCase();
+    if (LANG_MAP[code]) return LANG_MAP[code];
+    const short = code.split('-')[0];
+    if (LANG_MAP[short]) return LANG_MAP[short];
+  }
+  return 'en';
+}
 
-        <h2>الاشتراكات والمدفوعات</h2>
-        <ul>
-            <li>يقدم التطبيق اشتراكات تتجدد تلقائياً (شهرية وسنوية).</li>
-            <li>يتم خصم المبلغ من حساب Apple ID الخاص بك عند تأكيد الشراء.</li>
-            <li>يتجدد الاشتراك تلقائياً ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية.</li>
-            <li>يمكنك إدارة أو إلغاء اشتراكك من إعدادات حساب Apple ID الخاص بك.</li>
-            <li>لا يمكن استرداد المبلغ عن الفترة الحالية بعد تفعيل الاشتراك.</li>
-            <li>يحصل المستخدمون المجانيون على 3 تحليلات مجانية يومياً.</li>
-        </ul>
+function render(lang) {
+  const t = T[lang];
+  const isRTL = RTL_LANGS.has(lang);
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.title;
+  document.getElementById('content').innerHTML = `
+    <h1>${t.h1}</h1>
+    <p class="app-name">${t.subtitle}</p>
+    <p class="developer-name">${t.developer}</p>
+    <h2>${t.s1}</h2><p>${t.p1}</p>
+    <h2>${t.s2}</h2><p>${t.p2}</p><ul>${t.l2.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <h2>${t.s3}</h2><p>${t.p3}</p>
+    <h2>${t.s4}</h2><ul>${t.l4.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <h2>${t.s5}</h2><p>${t.p5}</p>
+    <h2>${t.s6}</h2><p>${t.p6}</p><ul>${t.l6.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <h2>${t.s7}</h2><p>${t.p7}</p>
+    <h2>${t.s8}</h2><p>${t.p8}</p><ul>${t.l8.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <h2>${t.s9}</h2><p>${t.p9}</p>
+    <h2>${t.s10}</h2><p>${t.p10}</p>
+    <h2>${t.s11}</h2><p>${t.p11}</p>
+    <h2>${t.s12}</h2><p>${t.p12}</p>
+    <p><a href="mailto:${t.email}">${t.email}</a></p>
+    <p class="update-date">${t.updated}</p>
+  `;
+  const picker = document.getElementById('langPicker');
+  picker.style.direction = isRTL ? 'rtl' : 'ltr';
+}
 
-        <h2>حقوق الملكية الفكرية</h2>
-        <p>جميع حقوق الملكية الفكرية المتعلقة بالتطبيق، بما في ذلك التصميم والشعارات والمحتوى والكود البرمجي، مملوكة لـ DietsAI. لا يجوز نسخ أو تعديل أو توزيع أي جزء من التطبيق دون إذن كتابي مسبق.</p>
+function switchLang(lang) {
+  localStorage.setItem('dietsai_lang', lang);
+  render(lang);
+}
 
-        <h2>استخدام مقبول</h2>
-        <p>توافق على:</p>
-        <ul>
-            <li>استخدام التطبيق للأغراض الشخصية فقط.</li>
-            <li>عدم محاولة الوصول غير المصرح به إلى أنظمتنا أو بيانات المستخدمين الآخرين.</li>
-            <li>عدم استخدام التطبيق بطريقة تنتهك القوانين المعمول بها.</li>
-            <li>عدم إعادة بيع أو إعادة توزيع الخدمة.</li>
-        </ul>
+function buildPicker() {
+  const picker = document.getElementById('langPicker');
+  const current = detectLang();
+  Object.keys(T).forEach(code => {
+    const opt = document.createElement('option');
+    opt.value = code;
+    opt.textContent = T[code].langName;
+    if (code === current) opt.selected = true;
+    picker.appendChild(opt);
+  });
+}
 
-        <h2>محتوى المستخدم</h2>
-        <p>أنت تحتفظ بملكية الصور والبيانات التي ترفعها إلى التطبيق. بتحميل المحتوى، تمنحنا ترخيصاً محدوداً لاستخدامه فقط لغرض تقديم خدمة تحليل الوجبات لك.</p>
-
-        <h2>تحديد المسؤولية</h2>
-        <p>يتم تقديم التطبيق "كما هو" دون أي ضمانات صريحة أو ضمنية. لا نتحمل المسؤولية عن:</p>
-        <ul>
-            <li>أي أضرار ناتجة عن الاعتماد على المعلومات الغذائية المقدمة.</li>
-            <li>انقطاع الخدمة أو فقدان البيانات.</li>
-            <li>عدم دقة تحليل الذكاء الاصطناعي.</li>
-        </ul>
-
-        <h2>إنهاء الخدمة</h2>
-        <p>يحق لنا تعليق أو إنهاء وصولك إلى التطبيق في حالة انتهاك هذه الشروط. يمكنك إنهاء استخدامك في أي وقت عن طريق حذف حسابك وإلغاء اشتراكك.</p>
-
-        <h2>التغييرات على الشروط</h2>
-        <p>قد نقوم بتحديث هذه الشروط من وقت لآخر. سنقوم بإخطارك بأي تغييرات جوهرية عبر التطبيق. استمرارك في استخدام التطبيق بعد التغييرات يعني موافقتك عليها.</p>
-
-        <h2>القانون الحاكم</h2>
-        <p>تخضع هذه الشروط وتفسر وفقاً للقوانين المعمول بها في بلد إقامتك.</p>
-
-        <h2>تواصل معنا</h2>
-        <p>إذا كان لديك أي استفسارات حول شروط الاستخدام، يمكنك التواصل معنا عبر البريد الإلكتروني:</p>
-        <p><a href="mailto:support@dietsai.app">support@dietsai.app</a></p>
-
-        <p class="update-date">آخر تحديث: فبراير 2026</p>
-    </div>
+buildPicker();
+render(detectLang());
+</script>
 </body>
 </html>
